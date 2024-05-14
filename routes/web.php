@@ -1,6 +1,13 @@
 <?php
 
+use App\Models\Siswa;
 use Illuminate\Support\Facades\Route;
+use App\Models\Film;
+//import controller
+use App\Http\Controllers\MyController;
+//import Movie Controller
+use App\Http\Controllers\MovieController;
+use App\Http\Controllers\ArtikelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,15 +24,65 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// route basic
-Route::get('/about',function (){
-    return '<h1>Halo</h1>'
-        . 'Selamat dadang di webapp saya<br>'
-        . 'Laravel, emang keren.';
+Route::get('/halaman2', function () {
+    return view('animals');
 });
 
-Route::get('animals',function () {
-    $king = "lion";
-    $hewan = ["monkey","dragonfly","tiger","butterfly","crocodile"];
-    return view('animals_page', compact('king', 'hewan'));
+Route::get('/halaman3', function () {
+    return view('fruits');
 });
+
+Route::get('/About', function () {
+    $nama = "Azril Dava Ilham";
+    $jk = "laki-laki";
+    $pendidikan = "SMK";
+    $pekerjaan = "Sekolah";
+    return view('biodata', compact('nama','jk','pendidikan','pekerjaan'));
+});
+
+//Parameter
+Route::get('/sample/{nama}', function (Request $request,$nama) {
+    $nama2 = $nama;
+    return view('sample',compact('nama2'));
+});
+
+Route::get('siswa', function () {
+    return view('siswa');
+});
+
+Route::get('Album', function () {
+    return view('AlbumMusik');
+});
+Route::get('film', function () {
+    return view('film');
+});
+Route::get('film/{id}', function (int $id) {
+    return view('detail-film',['film' => Film::findorfail($id)]);
+});
+
+//Route with controller
+Route::get('perkenalan',[App\Http\Controllers\MyController::class,'introduce']);
+Route::get('hewan',[MyController::class,'animals']);
+
+//route movie
+Route::get('movie',[MovieController::class, 'getMovie']);
+Route::get('movie/{id}',[MovieController::class, 'getMovieById']);
+
+Route::get('artikel', [ArtikelController::class, 'getArtikel']);
+Route::get('artikel/{id}', [ArtikelController::class, 'getArtikelById']);
+Route::get('artikel/kategori/{kategori}', [ArtikelController::class, 'getArtikelByKategori']);
+
+
+
+// Route::get('sekolah', function () {
+//     return view('siswa');
+// });
+
+
+
+
+
+
+
+
+
