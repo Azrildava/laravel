@@ -8,6 +8,10 @@ use App\Http\Controllers\MyController;
 //import Movie Controller
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\PenulisController;
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\BukuController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -65,13 +69,18 @@ Route::get('perkenalan',[App\Http\Controllers\MyController::class,'introduce']);
 Route::get('hewan',[MyController::class,'animals']);
 
 //route movie
-Route::get('movie',[MovieController::class, 'getMovie']);
+Route::get('movie',[MovieController::class, 'getMovie'])->middleware('auth');
 Route::get('movie/{id}',[MovieController::class, 'getMovieById']);
 
 Route::get('artikel', [ArtikelController::class, 'getArtikel']);
 Route::get('artikel/{id}', [ArtikelController::class, 'getArtikelById']);
 Route::get('artikel/kategori/{kategori}', [ArtikelController::class, 'getArtikelByKategori']);
 
+
+// route crud
+Route::resource('penulis', PenulisController::class);
+Route::resource('genre', GenreController::class);
+Route::resource('buku', BukuController::class);
 
 
 // Route::get('sekolah', function () {
@@ -86,3 +95,7 @@ Route::get('artikel/kategori/{kategori}', [ArtikelController::class, 'getArtikel
 
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
