@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-9">
             @if(session('success'))
             <div class="alert alert-success fade show" role="alert">
                 {{ session('success') }}
@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" id="datatable">
                             <thead>
                                 <tr>
                                     <th>No</th>

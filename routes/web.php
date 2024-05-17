@@ -11,6 +11,7 @@ use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\PenulisController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\FrontController;
 
 
 /*
@@ -77,11 +78,16 @@ Route::get('artikel/{id}', [ArtikelController::class, 'getArtikelById']);
 Route::get('artikel/kategori/{kategori}', [ArtikelController::class, 'getArtikelByKategori']);
 
 
-// route crud
-Route::resource('penulis', PenulisController::class);
-Route::resource('genre', GenreController::class);
-Route::resource('buku', BukuController::class);
+// route admin
+Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
+    Route::resource('penulis', PenulisController::class);
+    Route::resource('genre', GenreController::class);
+    Route::resource('buku', BukuController::class);
+});
 
+// route guest(tamu / pengunjung)
+Route::get('/',[FrontController::class, 'buku']);
+Route::get('buku/{id}',[FrontController::class, 'detailBuku']);
 
 // Route::get('sekolah', function () {
 //     return view('siswa');
